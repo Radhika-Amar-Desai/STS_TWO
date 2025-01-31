@@ -1,53 +1,33 @@
 import java.util.*;
 
-class Node {
-    int data;
-    Node next;
-
-    Node (int data) {
-        this.data = data;
-        this.next = null;
-    }
-
-}
-
-class LinkedList {
-    Node head_node;
-    
-    public void create_ll (List<Integer> nodes_val) {
-        this.head_node = new Node(nodes_val.get(0));
+public class LoopDetection {
+    public static void main(String[] args){
+        Scanner sc = new Scanner(System.in);
         
-        Node curr_node = head_node;
-        
-        for(int index = 1; index < nodes_val.size(); index ++){
-            Node new_node = new Node(nodes_val.get(index));
-            curr_node.next = new_node;
-            curr_node = new_node;
-        }
-    }
+        int n = sc.nextInt();
 
-    public void traverse() {
-        Node curr_node = head_node;
-        System.out.println(curr_node.data);
+        int[] nodes_val = new int[n];
 
         HashMap<Integer, Integer> map = new HashMap<>();
-        map.put(curr_node.data, curr_node.data);
 
-        while(curr_node.next != null){
-            curr_node = curr_node.next;
-            if(map.containsKey(curr_node.data)){
+        for(int i = 0; i < n; i++){
+            nodes_val[i] = sc.nextInt();
+        }
+
+        int i = 0;
+
+        for(i = 0; i < n; i++){
+
+            if(map.containsKey(nodes_val[i])){
                 System.out.println("Loop detected");
                 break;
             }
-            System.out.println(curr_node.data);
-        }
-    }
-}
 
-public class LoopDetection {
-    public static void main(String[] args){
-        LinkedList ll = new LinkedList();
-        ll.create_ll(Arrays.asList(1, 2, 3, 4 , 5, 4 , 2, 1));
-        ll.traverse();
+            map.put(nodes_val[i], nodes_val[i]);
+        }
+        
+        if( i == n){
+            System.out.println("Loop not detected");
+        }
     }
 }
